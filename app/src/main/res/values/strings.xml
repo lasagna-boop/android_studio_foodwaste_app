@@ -1,5 +1,5 @@
 <resources>
-    <!-- Existing strings -->
+    <!-- strings i used because there is ALWAYS a warning from android studio about hardcoding -->
     <string name="app_name">Food Waste Manager</string>
     <string name="save_meal">Save Meal</string>
     <string name="add_new_meal">Add New Meal</string>
@@ -17,5 +17,6 @@
     <string name="select_meal">Select a Meal</string>
     <string name="go_back">Go Back</string>
     <string name="sort_by_price">Sort by Price</string>
+    <string name="Restaurant_Address">Enter Restaurant Address</string>
 
 </resources>

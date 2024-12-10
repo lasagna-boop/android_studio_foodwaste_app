@@ -1,9 +1,9 @@
 package com.example.foodwastemanager
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ColumnInfo
-
+//class meal to store everything about a single entity
 @Entity(tableName = "meal_table")
 data class Meal(
     @PrimaryKey(autoGenerate = true)
@@ -16,5 +16,8 @@ data class Meal(
     val price: Double,
 
     @ColumnInfo(name = "restaurant_name")
-    val restaurantName: String
+    val restaurantName: String,
+
+    @ColumnInfo(name = "address")
+    val address: String
 )

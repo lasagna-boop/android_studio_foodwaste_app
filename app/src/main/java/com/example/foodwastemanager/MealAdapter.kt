@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class MealAdapter(
-    private val onMealClick: (Meal) -> Unit // Add a lambda for item clicks
+    private val onMealClick: (Meal) -> Unit // sorting clicks
 ) : ListAdapter<Meal, MealAdapter.MealViewHolder>(MealDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
@@ -20,7 +20,7 @@ class MealAdapter(
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         val meal = getItem(position)
-        holder.bind(meal, onMealClick) // Pass the click listener to the ViewHolder
+        holder.bind(meal, onMealClick) // Pass the click listener to the ViewHolder (GPT helped here not gonna lie)
     }
 
     class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,7 +34,7 @@ class MealAdapter(
             restaurantNameText.text = meal.restaurantName
 
             itemView.setOnClickListener {
-                onMealClick(meal) // Trigger the click listener with the clicked item
+                onMealClick(meal) // click listener
             }
         }
     }

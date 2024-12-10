@@ -1,5 +1,6 @@
 package com.example.foodwastemanager
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -22,45 +23,50 @@ class MealSelectorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selector) // new screen without top part
 
-        // Initialize the database and RecyclerView
+        // reinit db and rec.view
         mealDatabase = MealDatabase.getDatabase(context = this)
         recyclerView = findViewById(R.id.mealRecyclerView)
 
         mealAdapter = MealAdapter { meal ->
-            onMealSelected(meal) // Handle item clicks
+            onMealSelected(meal) // again handling clicks
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mealAdapter
 
         loadMeals()
 
-        // Handle "Go Back" button click
+        // goback logic once again
         val goBackButton: Button = findViewById(R.id.goBackButton)
         goBackButton.setOnClickListener {
-            finish() // Close the activity and go back to MainActivity
+            finish() // go to MAinActivity.kt
         }
 
-        // Handle "Sort by Price" button click
+        // sorting (asc in db call)
         val sortButton: Button = findViewById(R.id.sortButton)
         sortButton.setOnClickListener {
             sortMealsByPrice()
+        }
+        val openMapButton: Button = findViewById(R.id.openMapButton)
+        openMapButton.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun loadMeals() {
         CoroutineScope(Dispatchers.IO).launch {
-            val meals = mealDatabase.mealDao().getAllMeals() // Fetch meals from the database
+            val meals = mealDatabase.mealDao().getAllMeals() // fetch
             withContext(Dispatchers.Main) {
-                mealAdapter.submitList(meals) // Update RecyclerView with fetched meals
+                mealAdapter.submitList(meals) // update WITH FETCHED
             }
         }
     }
 
     private fun sortMealsByPrice() {
         CoroutineScope(Dispatchers.IO).launch {
-            val sortedMeals = mealDatabase.mealDao().getMealsSortedByPrice() // Fetch meals sorted by price
+            val sortedMeals = mealDatabase.mealDao().getMealsSortedByPrice() // price sorting
             withContext(Dispatchers.Main) {
-                mealAdapter.submitList(sortedMeals) // Update RecyclerView with sorted meals
+                mealAdapter.submitList(sortedMeals)
                 Toast.makeText(this@MealSelectorActivity, "Meals sorted by price!", Toast.LENGTH_SHORT).show()
             }
         }
@@ -73,14 +79,14 @@ class MealSelectorActivity : AppCompatActivity() {
 
         builder.setPositiveButton("Yes") { _, _ ->
             CoroutineScope(Dispatchers.IO).launch {
-                mealDatabase.mealDao().deleteMeal(meal) // Remove the meal from database
+                mealDatabase.mealDao().deleteMeal(meal) // removing the meal completely
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@MealSelectorActivity,
                         "Meal saved successfully!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    loadMeals() // Reload meals after deletion
+                    loadMeals() // reload agter crud (delete)
                 }
             }
         }

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="CoarseFineLocation">
+
+    <!-- permissions i need for location tracking -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +18,12 @@
         android:theme="@style/Theme.FoodWasteManager"
         tools:targetApi="31">
 
-        <!-- Main Activity -->
+        <!--api keys i've created on google cloud -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDoeijh4BTCWEJ7b8-oAi6fYYEQtsaWZBk" />
+
+        <!-- Main scope -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,12 +35,20 @@
             </intent-filter>
         </activity>
 
-        <!-- Meal Selector Activity -->
+        <!-- Meal selector Activity -->
         <activity
             android:name=".MealSelectorActivity"
             android:exported="true"
             android:label="@string/meal_selector_title"
             android:theme="@style/Theme.FoodWasteManager" />
+
+        <!-- map activities -->
+        <activity
+            android:name=".MapActivity"
+            android:exported="true"
+            android:label="Map"
+            android:theme="@style/Theme.FoodWasteManager" />
+
     </application>
 
 </manifest>

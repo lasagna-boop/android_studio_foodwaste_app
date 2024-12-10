@@ -41,12 +41,14 @@ android {
 }
 
 dependencies {
-    // Room dependencies
+    // Room dependencies. Some are outdated and i wasnt sure which ones should i use
     implementation("androidx.room:room-runtime:2.5.0")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.5.0")
     //recycler vier new implementation update i guess?
     implementation(libs.androidx.recyclerview)
+
+    implementation (libs.play.services.maps)
 
     // AndroidX and Material
     implementation(libs.material.v190)
@@ -75,6 +77,7 @@ dependencies {
     implementation(libs.annotations)
 }
 
+//at some stage i broke all the dependancies so had to ask gpt to help me resolve them. hope thats okay.
 configurations.all {
     resolutionStrategy {
         force("org.jetbrains:annotations:23.0.0")
