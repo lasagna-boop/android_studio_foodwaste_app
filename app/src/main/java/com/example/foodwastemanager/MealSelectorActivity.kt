@@ -3,6 +3,7 @@ package com.example.foodwastemanager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,16 +51,29 @@ class MealSelectorActivity : AppCompatActivity() {
     }
 
     private fun onMealSelected(meal: Meal) {
-        // Display a toast with the restaurant name
-        Toast.makeText(this, "Restaurant: ${meal.restaurantName}", Toast.LENGTH_SHORT).show()
 
-        // Delete the selected meal
-        CoroutineScope(Dispatchers.IO).launch {
-            mealDatabase.mealDao().deleteMeal(meal) // Remove the meal from database
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@MealSelectorActivity, "Meal deleted!", Toast.LENGTH_SHORT).show()
-                loadMeals() // Reload meals after deletion
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirm Meal")
+        builder.setMessage ("Are you sure you want to get this meal? There is no backing up after this selection")
+
+        builder.setPositiveButton("Yes") {_, _ ->
+
+                CoroutineScope(Dispatchers.IO) .launch {
+                    mealDatabase.mealDao().deleteMeal(meal)
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(
+                            this@MealSelectorActivity,
+                            "Meal saved successfully!",
+                            Toast.LENGTH_SHORT
+                            ).show()
+                            loadMeals()
+                    }
             }
         }
+        builder.setNegativeButton("No!"){dialog,_->
+                dialog.dismiss()
+        }
+        val dialog = builder.create ()
+        dialog.show()
     }
 }
