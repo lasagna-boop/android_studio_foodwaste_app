@@ -1,0 +1,20 @@
+<resources>
+    <!-- Existing strings -->
+    <string name="app_name">Food Waste Manager</string>
+    <string name="save_meal">Save Meal</string>
+    <string name="add_new_meal">Add New Meal</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="price">Price</string>
+    <string name="restaurant_name">Restaurant Name</string>
+
+    <!-- Placeholders for meal_item.xml -->
+    <string name="meal_name_placeholder">Sample Meal Name</string>
+    <string name="price_placeholder">Sample Price</string>
+    <string name="restaurant_name_placeholder">Sample Restaurant Name</string>
+
+    <string name="meal_selector_title">Meal Selector</string>
+    <string name="go_to_selector">Go to Meal Selector</string>
+    <string name="select_meal">Select a Meal</string>
+    <string name="go_back">Go Back</string>
+
+</resources>
