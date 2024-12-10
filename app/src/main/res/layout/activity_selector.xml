@@ -34,4 +34,13 @@
         android:text="@string/go_back"
         android:backgroundTint="@color/purple_500"
         android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/sortButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by_price"
+        android:layout_margin="16dp"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

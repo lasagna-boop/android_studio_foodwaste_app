@@ -8,14 +8,18 @@ import androidx.room.Query
 @Dao
 interface MealDao {
 
-    // Insert a meal and return its generated ID
+    // return ID
     @Insert
     suspend fun insertMeal(meal: Meal): Long
 
     @Delete
     suspend fun deleteMeal(meal: Meal)
 
-    // Fetch all meals from the database
+    // select ALL meals from room db
     @Query("SELECT * FROM meal_table ORDER BY id DESC")
     suspend fun getAllMeals(): List<Meal>
+
+    //for order by asc in the meal selector activity for prettier print
+    @Query("SELECT * FROM meal_table ORDER BY meal_price ASC")
+    suspend fun getMealsSortedByPrice(): List<Meal>
 }

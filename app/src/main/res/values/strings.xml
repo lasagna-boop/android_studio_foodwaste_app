@@ -16,5 +16,6 @@
     <string name="go_to_selector">Go to Meal Selector</string>
     <string name="select_meal">Select a Meal</string>
     <string name="go_back">Go Back</string>
+    <string name="sort_by_price">Sort by Price</string>
 
 </resources>

@@ -39,6 +39,12 @@ class MealSelectorActivity : AppCompatActivity() {
         goBackButton.setOnClickListener {
             finish() // Close the activity and go back to MainActivity
         }
+
+        // Handle "Sort by Price" button click
+        val sortButton: Button = findViewById(R.id.sortButton)
+        sortButton.setOnClickListener {
+            sortMealsByPrice()
+        }
     }
 
     private fun loadMeals() {
@@ -50,30 +56,38 @@ class MealSelectorActivity : AppCompatActivity() {
         }
     }
 
-    private fun onMealSelected(meal: Meal) {
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Confirm Meal")
-        builder.setMessage ("Are you sure you want to get this meal? There is no backing up after this selection")
-
-        builder.setPositiveButton("Yes") {_, _ ->
-
-                CoroutineScope(Dispatchers.IO) .launch {
-                    mealDatabase.mealDao().deleteMeal(meal)
-                    withContext(Dispatchers.Main){
-                        Toast.makeText(
-                            this@MealSelectorActivity,
-                            "Meal saved successfully!",
-                            Toast.LENGTH_SHORT
-                            ).show()
-                            loadMeals()
-                    }
+    private fun sortMealsByPrice() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val sortedMeals = mealDatabase.mealDao().getMealsSortedByPrice() // Fetch meals sorted by price
+            withContext(Dispatchers.Main) {
+                mealAdapter.submitList(sortedMeals) // Update RecyclerView with sorted meals
+                Toast.makeText(this@MealSelectorActivity, "Meals sorted by price!", Toast.LENGTH_SHORT).show()
             }
         }
-        builder.setNegativeButton("No!"){dialog,_->
-                dialog.dismiss()
+    }
+
+    private fun onMealSelected(meal: Meal) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirm Meal")
+        builder.setMessage("Are you sure you want to get this meal? There is no backing up after this selection")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            CoroutineScope(Dispatchers.IO).launch {
+                mealDatabase.mealDao().deleteMeal(meal) // Remove the meal from database
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@MealSelectorActivity,
+                        "Meal saved successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    loadMeals() // Reload meals after deletion
+                }
+            }
         }
-        val dialog = builder.create ()
+        builder.setNegativeButton("No!") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
         dialog.show()
     }
 }
