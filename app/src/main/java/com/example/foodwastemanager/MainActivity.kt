@@ -2,8 +2,10 @@ package com.example.foodwastemanager
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -75,8 +77,15 @@ class MainActivity : AppCompatActivity() {
     // Load meals from database into RecyclerView
     private fun loadMeals() {
         CoroutineScope(Dispatchers.IO).launch {
-            val meals = mealDatabase.mealDao().getAllMeals() // Fetch meals
+            val meals = mealDatabase.mealDao().getAllMeals() // Fetch meals from the database
             withContext(Dispatchers.Main) {
+                if (meals.isEmpty()) {
+                    findViewById<TextView>(R.id.noMealsTextView).visibility = View.VISIBLE
+                    findViewById<RecyclerView>(R.id.mealRecyclerView).visibility = View.GONE
+                } else {
+                    findViewById<TextView>(R.id.noMealsTextView).visibility = View.GONE
+                    findViewById<RecyclerView>(R.id.mealRecyclerView).visibility = View.VISIBLE
+                }
                 mealAdapter.submitList(meals) // Update RecyclerView adapter
             }
         }

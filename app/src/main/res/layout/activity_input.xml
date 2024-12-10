@@ -73,6 +73,17 @@
         android:layout_weight="1"
         android:layout_marginBottom="16dp" />
 
+
+    <TextView
+        android:id="@+id/noMealsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No meals available"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray" />
+
     <!-- Go to Selector Button -->
     <Button
         android:id="@+id/goToSelectorButton"
