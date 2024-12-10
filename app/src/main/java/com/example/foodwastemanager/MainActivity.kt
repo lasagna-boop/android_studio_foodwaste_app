@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,14 +51,21 @@ class MainActivity : AppCompatActivity() {
 
             if (mealName.isNotEmpty() && restaurantName.isNotEmpty()) {
                 val meal = Meal(mealName = mealName, price = price, restaurantName = restaurantName)
-                saveMeal(meal)
 
-                // Clear input fields after saving
-                mealNameInput.text.clear()
-                priceInput.text.clear()
-                restaurantNameInput.text.clear()
+                // Show Confirmation Dialog
+                AlertDialog.Builder(this).apply {
+                    setTitle("Confirm share")
+                    setMessage("Do you want to share this meal?")
+                    setPositiveButton("Save") { _, _ ->
+                        saveMeal(meal)
+                        mealNameInput.text.clear()
+                        priceInput.text.clear()
+                        restaurantNameInput.text.clear()
+                    }
+                    setNegativeButton("Cancel", null)
+                }.show()
             } else {
-                println("Please fill in all fields") // Optional: Replace with Toast for better UX
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
 
